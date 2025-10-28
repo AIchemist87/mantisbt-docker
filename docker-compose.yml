@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb:12
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bugtracker
+      MYSQL_USER: mantisbt
+      MYSQL_PASSWORD: mantisbt
+    volumes:
+      - ./mysql:/var/lib/mysql
+    restart: unless-stopped
+
+  mantis:
+    platform: "linux/amd64"
+    image: xlrl/mantisbt:latest
+    environment:
+      # Use your local timezone (you’re in Asia/Jerusalem)
+      MANTIS_TIMEZONE: Asia/Jerusalem
+      # Disable admin pages after finishing DB checks
+      MANTIS_ENABLE_ADMIN: "1"
+      # Increase PHP upload limit to satisfy admin check
+      PHP_MAX_UPLOAD_SIZE: 16M
+      PHP_POST_MAX_SIZE: 16M
+    ports:
+      - "8989:80"
+    volumes:
+      - ./config:/var/www/html/config
+      - ./custom:/var/www/html/custom
+      - ./plugins/MantisSeeder:/var/www/html/plugins/MantisSeeder
+      - ./admin:/var/www/html/admin:ro
+      - ./.htaccess:/var/www/html/.htaccess:ro
+      # - ./admin:/var/www/html/admin:ro
+      # - ./.htaccess:/var/www/html/.htaccess:ro
+    depends_on:
+      - db
+    restart: unless-stopped
