@@ -15,7 +15,6 @@ This project provides a complete MantisBT environment running in Docker containe
 - 🔧 Pre-configured with sensible defaults
 - 📊 Includes sample database with test data
 - 🌱 MantisSeeder plugin for importing realistic test issues
-- 🧪 Playwright test framework included
 - ⚙️ Easy configuration management
 
 ## Prerequisites
@@ -26,12 +25,18 @@ This project provides a complete MantisBT environment running in Docker containe
 
 ## Quick Start
 
+> **New to Docker?** Don't worry! Follow these steps carefully, and you'll have MantisBT running in minutes.
+
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
-cd mantisbt
+git clone https://github.com/AIchemist87/mantisbt-docker.git
+cd mantisbt-docker
 ```
+
+**Platform Notes:**
+- **Windows:** Use PowerShell, Command Prompt, or Git Bash
+- **macOS/Linux:** Use Terminal
 
 ### 2. Configure MantisBT
 
@@ -102,8 +107,7 @@ mantisbt/
 │   └── mantisbt.sql    # Initial database with sample data
 ├── plugins/            # MantisBT plugins
 │   └── MantisSeeder/   # Plugin for seeding test data
-├── docker-compose.yml  # Docker services configuration
-└── package.json        # Node.js dependencies (Playwright tests)
+└── docker-compose.yml  # Docker services configuration
 ```
 
 ## Using MantisSeeder Plugin
@@ -126,18 +130,6 @@ For detailed development instructions, see [DEVELOPMENT.md](DEVELOPMENT.md).
 ## Installation Guide
 
 For step-by-step installation instructions, see [INSTALLATION.md](INSTALLATION.md).
-
-## Testing
-
-This project includes Playwright for automated testing:
-
-```bash
-# Install test dependencies
-npm install
-
-# Run tests (implementation needed)
-npm test
-```
 
 ## Managing the Database
 
@@ -205,6 +197,61 @@ Key configuration options in `config/config_inc.php`:
 - **Path:** `$g_path` (set to `http://localhost:8989/`)
 - **Timezone:** `$g_default_timezone`
 - **Email:** Configure SMTP settings for email notifications
+
+## Common Operations
+
+### Start/Stop/Restart Services
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Stop all services
+docker-compose down
+
+# Restart all services
+docker-compose restart
+
+# Restart only MantisBT (not database)
+docker-compose restart mantis
+
+# View logs
+docker-compose logs -f
+
+# Check status
+docker-compose ps
+```
+
+### Daily Usage
+
+**To start working:**
+```bash
+cd /path/to/mantisbt-docker
+docker-compose up -d
+# Open http://localhost:8989 in browser
+```
+
+**To stop working:**
+```bash
+docker-compose down
+# Your data is safely stored and will be there next time
+```
+
+**To check if it's running:**
+```bash
+docker-compose ps
+# Look for "Up" status
+```
+
+### Update MantisBT Data
+
+```bash
+# Backup before any major changes
+docker-compose exec db mariadb-dump -u mantisbt -pmantisbt bugtracker > backup_$(date +%Y%m%d).sql
+
+# After making changes in MantisBT UI, they're automatically saved
+# No manual steps needed!
+```
 
 ## Security Notes
 

@@ -9,7 +9,6 @@ This guide provides detailed information for developers working on this MantisBT
 - [Docker Services](#docker-services)
 - [Database Management](#database-management)
 - [Plugin Development](#plugin-development)
-- [Testing](#testing)
 - [Debugging](#debugging)
 - [Common Development Tasks](#common-development-tasks)
 - [Troubleshooting](#troubleshooting)
@@ -21,7 +20,6 @@ This guide provides detailed information for developers working on this MantisBT
 - Docker Desktop (version 20.10+)
 - Docker Compose (version 2.0+)
 - Git
-- Node.js (version 16+ for Playwright tests)
 - A code editor (VS Code, PhpStorm, etc.)
 
 ### Initial Setup
@@ -29,8 +27,8 @@ This guide provides detailed information for developers working on this MantisBT
 1. **Clone and Configure**
 
 ```bash
-git clone <your-repository-url>
-cd mantisbt
+git clone https://github.com/AIchemist87/mantisbt-docker.git
+cd mantisbt-docker
 cp config/config_inc.php.template config/config_inc.php
 ```
 
@@ -74,8 +72,7 @@ mantisbt/
 ├── mysql/                 # MariaDB data directory (Docker volume, not in Git)
 ├── plugins/               # MantisBT plugins
 │   └── MantisSeeder/      # Test data seeding plugin
-├── docker-compose.yml     # Docker services definition
-└── package.json           # Node.js dependencies
+└── docker-compose.yml     # Docker services definition
 ```
 
 ### Technology Stack
@@ -83,7 +80,6 @@ mantisbt/
 - **Backend:** PHP 7.4+ (via MantisBT Docker image)
 - **Database:** MariaDB 12
 - **Web Server:** Apache (included in MantisBT image)
-- **Testing:** Playwright (Node.js)
 - **Containerization:** Docker & Docker Compose
 
 ## Docker Services
@@ -281,55 +277,6 @@ docker-compose restart mantis
 
 Then navigate to **Manage → Manage Plugins** and install your plugin.
 
-## Testing
-
-### Playwright Tests
-
-The project includes Playwright for end-to-end testing.
-
-#### Setup
-
-```bash
-# Install dependencies
-npm install
-
-# Install Playwright browsers
-npx playwright install
-```
-
-#### Running Tests
-
-```bash
-# Run all tests
-npm test
-
-# Run in headed mode (see browser)
-npx playwright test --headed
-
-# Run specific test file
-npx playwright test tests/login.spec.js
-
-# Debug mode
-npx playwright test --debug
-```
-
-#### Writing Tests
-
-Create test files in `tests/` directory:
-
-```javascript
-// tests/example.spec.js
-const { test, expect } = require('@playwright/test');
-
-test('login to MantisBT', async ({ page }) => {
-  await page.goto('http://localhost:8989');
-  await page.fill('input[name="username"]', 'administrator');
-  await page.fill('input[name="password"]', 'root');
-  await page.click('input[type="submit"]');
-  await expect(page).toHaveURL(/view_all_bug_page/);
-});
-```
-
 ## Debugging
 
 ### PHP Debugging
@@ -506,7 +453,6 @@ docker-compose restart mantis
 - [MantisBT Documentation](https://www.mantisbt.org/documentation.php)
 - [MantisBT Plugin Development Guide](https://www.mantisbt.org/docs/master/en-US/Developers_Guide/html-desktop/#DEVELOPERS.PLUGINS)
 - [Docker Documentation](https://docs.docker.com/)
-- [Playwright Documentation](https://playwright.dev/)
 - [MariaDB Documentation](https://mariadb.com/kb/en/documentation/)
 
 ## Getting Help
