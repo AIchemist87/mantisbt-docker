@@ -1,0 +1,37 @@
+<?php
+# MantisBT Configuration Template
+# Copy this file to config_inc.php and update the values below
+
+# Database Configuration
+$g_hostname               = 'db';
+$g_db_type                = 'mysqli';
+$g_database_name          = 'bugtracker';
+$g_db_username            = 'mantisbt';
+$g_db_password            = 'YOUR_DATABASE_PASSWORD';
+
+# Timezone Configuration
+$g_default_timezone       = 'UTC';
+
+# Cryptography
+# Generate a secure salt using: openssl rand -base64 32
+$g_crypto_master_salt     = 'YOUR_CRYPTO_MASTER_SALT_HERE';
+
+# Path Configuration
+$g_path                   = 'http://localhost:8989/';
+
+# Error Display Configuration
+$g_show_detailed_errors = OFF;
+$g_display_errors = array(
+    E_USER_ERROR => 'halt',
+    E_RECOVERABLE_ERROR => 'halt',
+    E_WARNING => 'inline',
+    E_NOTICE => 'inline',
+    E_USER_WARNING => 'inline',
+    E_USER_NOTICE => 'inline'
+);
+
+# Email Configuration
+$g_webmaster_email         = 'webmaster@example.com';
+$g_from_email              = 'noreply@example.com';
+$g_return_path_email       = 'bounce@example.com';
+

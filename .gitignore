@@ -1,3 +1,9 @@
+# Configuration files with sensitive data
+config/config_inc.php
+
+# Database files
+mysql/
+
 # Node modules
 node_modules/
 
