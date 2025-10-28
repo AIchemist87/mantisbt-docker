@@ -1,6 +1,9 @@
 # Configuration files with sensitive data
 config/config_inc.php
 
+# Internal documentation (not for public GitHub)
+CHATBOT_INTEGRATION.md
+
 # Database files
 mysql/
 
